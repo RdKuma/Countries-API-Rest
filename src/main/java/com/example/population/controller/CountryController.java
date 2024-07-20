@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.List;
 
 @RestController
@@ -16,14 +17,19 @@ public class CountryController {
     private CountryService countryService;
 
     @PostMapping("/country")
-    public ResponseEntity<Country> saveOrUpdateCountry(@RequestBody Country country) {
-        Country savedCountry = countryService.saveOrUpdateCountry(country);
-        return ResponseEntity.ok(savedCountry);
+    public ResponseEntity<List<Country>> fetchAndSaveCountries() {
+        List<Country> savedCountries = countryService.fetchAndSaveCountries();
+        return ResponseEntity.ok(savedCountries);
     }
 
     @GetMapping("/country")
     public ResponseEntity<List<Country>> getAllCountries() {
         List<Country> countries = countryService.getAllCountries();
         return ResponseEntity.ok(countries);
+    }
+
+    @GetMapping("/")
+    public String home() {
+        return "Bienvenido a la API de datos poblacionales";
     }
 }
