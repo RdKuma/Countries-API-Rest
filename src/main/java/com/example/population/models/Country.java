@@ -1,39 +1,41 @@
 package com.example.population.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Country {
-    @Id
-    private String name;
-    private Long population;
 
-    // Constructor por defecto
-    public Country() {
-    }
+    private Name name;
+    private int population;
 
-    // Constructor con parámetros
-    public Country(String name, Long population) {
-        this.name = name;
-        this.population = population;
-    }
-
-    // Getters
-    public String getName() {
+    // Getters y setters
+    public Name getName() {
         return name;
     }
 
-    public Long getPopulation() {
-        return population;
-    }
-
-    // Setters
-    public void setName(String name) {
+    public void setName(Name name) {
         this.name = name;
     }
 
-    public void setPopulation(Long population) {
+    public int getPopulation() {
+        return population;
+    }
+
+    public void setPopulation(int population) {
         this.population = population;
+    }
+
+    // Clase interna para el nombre
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Name {
+        private String common;
+
+        public String getCommon() {
+            return common;
+        }
+
+        public void setCommon(String common) {
+            this.common = common;
+        }
     }
 }

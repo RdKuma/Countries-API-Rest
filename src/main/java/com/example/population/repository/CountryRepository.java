@@ -1,7 +1,7 @@
 package com.example.population.repository;
 
-import com.example.population.models.Country;
+import com.example.population.models.CountryEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CountryRepository extends JpaRepository<Country, String> {
+public interface CountryRepository extends JpaRepository<CountryEntity, Long> {
 }
