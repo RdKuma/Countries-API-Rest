@@ -17,13 +17,13 @@ public class CountryController {
     // Endpoint de bienvenida
     @GetMapping("/")
     public String home() {
-        return "Welcome to the Country API";
+        return "Bienvenido a la API de datos poblacionales";
     }
 
     // Endpoint para cargar los países
     @PostMapping("/api/v1/data/country")
-    public ResponseEntity<List<CountryEntity>> fetchAndSaveCountries() {
-        List<CountryEntity> savedCountries = countryService.fetchAndSaveCountries();
+    public ResponseEntity<List<CountryEntity>> fetchAndSaveCountries(@RequestBody List<CountryEntity> countries) {
+        List<CountryEntity> savedCountries = countryService.saveCountries(countries);
         return ResponseEntity.ok(savedCountries);
     }
 

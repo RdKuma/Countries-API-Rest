@@ -1,15 +1,12 @@
 package com.example.population.service;
 
-import com.example.population.models.Country;
 import com.example.population.models.CountryEntity;
 import com.example.population.repository.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Service
 public class CountryService {
@@ -17,30 +14,32 @@ public class CountryService {
     @Autowired
     private CountryRepository countryRepository;
 
-    private static final Logger logger = Logger.getLogger(CountryService.class.getName());
+    public List<CountryEntity> saveCountries(List<CountryEntity> countries) {
+        List <CountryEntity> savedCountries = countries.stream()
+                .map(this::saveCountryIfNotExists)
+                .collect(Collectors.toList());
+        return savedCountries;
+    }
 
-    public List<CountryEntity> fetchAndSaveCountries() {
-        String url = "https://restcountries.com/v3.1/all";
-        RestTemplate restTemplate = new RestTemplate();
-        Country[] countries = restTemplate.getForObject(url, Country[].class);
-
-        if (countries != null) {
-            Arrays.stream(countries).forEach(country -> {
-                CountryEntity newCountry = new CountryEntity();
-                newCountry.setName(country.getName().getCommon());
-                newCountry.setPopulation(country.getPopulation());
-
-                logger.info("Saving country: " + newCountry.getName() + " with population: " + newCountry.getPopulation());
-                countryRepository.save(newCountry);
-            });
+    private CountryEntity saveCountryIfNotExists(CountryEntity country) {
+        CountryEntity existingCountry = countryRepository.findByName(country.getName());
+        if (existingCountry == null) {
+            return countryRepository.save(country);
         } else {
-            logger.warning("No countries found from external API.");
+            // Si deseas actualizar la información del país existente, descomenta la siguiente línea:
+            // existingCountry.setPopulation(country.getPopulation());
+            // return countryRepository.save(existingCountry);
+            return existingCountry;
         }
-
-        return countryRepository.findAll();
     }
 
     public List<CountryEntity> getAllCountries() {
         return countryRepository.findAll();
+    }
+
+    // El método fetchAndSaveCountries puede ser removido si no es necesario
+    public List<CountryEntity> fetchAndSaveCountries() {
+        // Implementa la lógica si es necesario
+        return List.of(); // Devuelve una lista vacía o implementa la lógica correspondiente
     }
 }
