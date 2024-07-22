@@ -9,26 +9,28 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/data")
 public class CountryController {
 
     @Autowired
     private CountryService countryService;
 
-    @PostMapping("/country/load")
+    // Endpoint de bienvenida
+    @GetMapping("/")
+    public String home() {
+        return "Welcome to the Country API";
+    }
+
+    // Endpoint para cargar los países
+    @PostMapping("/api/v1/data/country")
     public ResponseEntity<List<CountryEntity>> fetchAndSaveCountries() {
         List<CountryEntity> savedCountries = countryService.fetchAndSaveCountries();
         return ResponseEntity.ok(savedCountries);
     }
 
-    @GetMapping("/country/list")
+    // Endpoint para listar todos los países
+    @GetMapping("/api/v1/data/country")
     public ResponseEntity<List<CountryEntity>> getAllCountries() {
         List<CountryEntity> countries = countryService.getAllCountries();
         return ResponseEntity.ok(countries);
-    }
-
-    @GetMapping("/")
-    public String home() {
-        return "Welcome to this API Rest";
     }
 }

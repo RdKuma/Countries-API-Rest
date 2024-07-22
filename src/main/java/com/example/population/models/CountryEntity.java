@@ -21,7 +21,7 @@ public class CountryEntity {
 
     public void setId(Long id) {
         this.id = id;
-    }
+    } // Añadir el name. Guardar y actualizar.
 
     public String getName() {
         return name;
