@@ -8,7 +8,6 @@ public class Country {
     private String name;
     private long population;
 
-    // Constructores
     public Country() {}
 
     public Country(String name, long population) {
@@ -16,7 +15,6 @@ public class Country {
         this.population = population;
     }
 
-    // Getters y setters
     public String getName() {
         return name;
     }

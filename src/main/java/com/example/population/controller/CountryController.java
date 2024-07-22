@@ -16,12 +16,7 @@ public class CountryController {
 
     @GetMapping("/")
     public String home() {
-        return "Bienvenido a la aplicación de datos de población. Visite /api/v1/data/country para ver los datos de los países.";
-    }
-
-    @GetMapping("/api/v1/data")
-    public String welcome() {
-        return "Bienvenido a la API de datos de población de países. Use /api/v1/data/country para obtener los datos de los países.";
+        return "Bienvenido a mi API Rest. Visita /api/v1/data/country para ver los datos de los países.";
     }
 
     @GetMapping("/api/v1/data/country")
