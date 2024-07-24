@@ -1,6 +1,6 @@
 package com.example.population.controller;
 
-import com.example.population.models.Country;
+import com.example.population.models.CountryEntity;
 import com.example.population.service.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,14 +14,23 @@ public class CountryController {
     @Autowired
     private CountryService countryService;
 
+    // Endpoint de bienvenida
     @GetMapping("/")
     public String home() {
-        return "Bienvenido a mi API Rest. Visita /api/v1/data/country para ver los datos de los países.";
+        return "Welcome to the Country API";
     }
 
+    // Endpoint para cargar los países
+    @PostMapping("/api/v1/data/country")
+    public ResponseEntity<List<CountryEntity>> fetchAndSaveCountries() {
+        List<CountryEntity> savedCountries = countryService.fetchAndSaveCountries();
+        return ResponseEntity.ok(savedCountries);
+    }
+
+    // Endpoint para listar todos los países
     @GetMapping("/api/v1/data/country")
-    public ResponseEntity<List<Country>> getAllCountries() {
-        List<Country> countries = countryService.getAllCountries();
+    public ResponseEntity<List<CountryEntity>> getAllCountries() {
+        List<CountryEntity> countries = countryService.getAllCountries();
         return ResponseEntity.ok(countries);
     }
 }

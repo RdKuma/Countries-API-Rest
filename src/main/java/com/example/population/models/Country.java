@@ -5,37 +5,37 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Country {
 
-    private String name;
-    private long population;
+    private Name name;
+    private int population;
 
-    public Country() {}
-
-    public Country(String name, long population) {
-        this.name = name;
-        this.population = population;
-    }
-
-    public String getName() {
+    // Getters y setters
+    public Name getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(Name name) {
         this.name = name;
     }
 
-    public long getPopulation() {
+    public int getPopulation() {
         return population;
     }
 
-    public void setPopulation(long population) {
+    public void setPopulation(int population) {
         this.population = population;
     }
 
-    @Override
-    public String toString() {
-        return "Country{" +
-                "name='" + name + '\'' +
-                ", population=" + population +
-                '}';
+    // Clase interna para el nombre
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Name {
+        private String common;
+
+        public String getCommon() {
+            return common;
+        }
+
+        public void setCommon(String common) {
+            this.common = common;
+        }
     }
 }
