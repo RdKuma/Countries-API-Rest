@@ -26,13 +26,20 @@ public class CountryService {
 
         if (countries != null) {
             Arrays.stream(countries).forEach(country -> {
-                CountryEntity newCountry = new CountryEntity();
-                // Usamos getName().getCommon() para obtener el nombre del país
-                newCountry.setName(country.getName().getCommon());
-                newCountry.setPopulation(country.getPopulation());
+                String countryName = country.getName().getCommon();
+                CountryEntity existingCountry = countryRepository.findByCountry(countryName);
 
-                logger.info("Saving country: " + newCountry.getName() + " with population: " + newCountry.getPopulation());
-                countryRepository.save(newCountry);
+                if (existingCountry != null) {
+                    existingCountry.setPopulation(country.getPopulation());
+                    countryRepository.save(existingCountry);
+                    logger.info("Updated country: " + countryName + " with population: " + country.getPopulation());
+                } else {
+                    CountryEntity newCountry = new CountryEntity();
+                    newCountry.setCountry(countryName);
+                    newCountry.setPopulation(country.getPopulation());
+                    countryRepository.save(newCountry);
+                    logger.info("Saved new country: " + countryName + " with population: " + country.getPopulation());
+                }
             });
         } else {
             logger.warning("No countries found from external API.");
