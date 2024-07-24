@@ -22,9 +22,9 @@ public class CountryController {
 
     // Endpoint para cargar los países
     @PostMapping("/api/v1/data/country")
-    public ResponseEntity<List<CountryEntity>> fetchAndSaveCountries() {
-        List<CountryEntity> savedCountries = countryService.fetchAndSaveCountries();
-        return ResponseEntity.ok(savedCountries);
+    public ResponseEntity<String> fetchAndSaveCountries() {
+        countryService.fetchAndSaveCountries();
+        return ResponseEntity.ok("Todos los datos han sido cargados.");
     }
 
     // Endpoint para listar todos los países

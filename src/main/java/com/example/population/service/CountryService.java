@@ -19,7 +19,7 @@ public class CountryService {
 
     private static final Logger logger = Logger.getLogger(CountryService.class.getName());
 
-    public List<CountryEntity> fetchAndSaveCountries() {
+    public void fetchAndSaveCountries() {
         String url = "https://restcountries.com/v3.1/all";
         RestTemplate restTemplate = new RestTemplate();
         Country[] countries = restTemplate.getForObject(url, Country[].class);
@@ -44,8 +44,6 @@ public class CountryService {
         } else {
             logger.warning("No countries found from external API.");
         }
-
-        return countryRepository.findAll();
     }
 
     public List<CountryEntity> getAllCountries() {
